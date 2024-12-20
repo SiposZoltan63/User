@@ -32,7 +32,7 @@ namespace feladat1220
                     FirstName = dr.GetString(1),
                     LastName = dr.GetString(2),
                     CreatedTime = dr.GetDateTime(3),
-                };
+             };
             Console.WriteLine($"adatok: {FirstName},{LastName},{Password}");
         }
                 while (dr.Read());
@@ -45,7 +45,7 @@ namespace feladat1220
             using (var connection = Connect.GetConnection())
             {
                 string query = "INSERT INTO data (FirstName, LastName, Password) VALUES (@FirstName, @LastName, @Password);";
-                using (var command = new SqlCommand(query, connection))
+                using (var command = new SqlCommand(query, (SqlConnection)connection))
                 {
                     command.Parameters.AddWithValue("@FirstName", FirstName);
                     command.Parameters.AddWithValue("@LastName", LastName);
@@ -61,7 +61,7 @@ namespace feladat1220
             using (var connection = Connect.GetConnection())
             {
                 string query = "DELETE FROM data WHERE Id = @Id;";
-                using (var command = new SqlCommand(query, connection))
+                using (var command = new SqlCommand(query, (SqlConnection)connection))
                 {
                     command.Parameters.AddWithValue("@Id", Id);
                     command.ExecuteNonQuery();
@@ -75,7 +75,7 @@ namespace feladat1220
             using (var connection = Connect.GetConnection())
             {
                 string query = "UPDATE data SET FirstName = @FirstName, LastName = @LastName, Password = @Password WHERE Id = @Id;";
-                using (var command = new SqlCommand(query, connection))
+                using (var command = new SqlCommand(query, (SqlConnection)connection))
                 {
                     command.Parameters.AddWithValue("@Id", id);
                     command.Parameters.AddWithValue("@FirstName", FirstName);
